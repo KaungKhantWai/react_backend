@@ -1,14 +1,14 @@
 const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/database');
 
-const Article = sequelize.define('Article', {
+const Post = sequelize.define('Post', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true
   },
   category: {
-    type: DataTypes.ENUM('technology', 'lifestyle', 'education'),
+    type: DataTypes.STRING,
     allowNull: false
   },
   title: {
@@ -21,19 +21,22 @@ const Article = sequelize.define('Article', {
   },
   datetime: {
     type: DataTypes.DATE,
-    allowNull: false
+    allowNull: false,
+    defaultValue: DataTypes.NOW 
   },
-  photo: {
+  image: {
     type: DataTypes.STRING,
     defaultValue: null
   },
   paragraph: {
     type: DataTypes.TEXT,
     allowNull: false
-  }
-}, {
+  },
+  user_id: { type: DataTypes.INTEGER, references: { model: 'Users', key: 'id' } }
+},
+{
   timestamps: true,
-  tableName: 'articles'
+  tableName: 'posts'
 });
 
-module.exports = Article;
+module.exports = Post;
