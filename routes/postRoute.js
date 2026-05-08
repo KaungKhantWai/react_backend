@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const upload = require('../middleware/upload');
+const { authenticateToken } = require('../middleware/authMiddleware');
 const {
   getPosts,
   getPostById,
@@ -11,11 +12,11 @@ const {
 
 router.route('/')
   .get(getPosts)
-  .post(upload.single('image'), createPost);
+  .post(authenticateToken, upload.single('image'), createPost);
 
 router.route('/:id')
   .get(getPostById)
-  .put(upload.single('image'), updatePost)
-  .delete(deletePost);
+  .put(authenticateToken, upload.single('image'), updatePost)
+  .delete(authenticateToken, deletePost);
 
 module.exports = router;
