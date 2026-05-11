@@ -1,23 +1,17 @@
 const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
-  process.env.DB_USER,
-  process.env.DB_PASSWORD,
-  {
-    host: process.env.DB_HOST,
-    dialect: 'mysql',
-    logging: false
-  }
+  { dialect: 'sqlite',
+  storage: './database.sqlite',
+  logging: false }
 );
 
 const connectDB = async () => {
-  try {
+   try {
     await sequelize.authenticate();
-    console.log('MySQL connected successfully');
-    console.log('Database synced');
+    console.log('SQLite connected successfully');
   } catch (error) {
-    console.error('MySQL connection error:', error);
+    console.error('SQLite connection error:', error);
     process.exit(1);
   }
 };
